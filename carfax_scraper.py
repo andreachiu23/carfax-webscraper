@@ -22,27 +22,28 @@ f.write(header + "\n")
 
 # loop through each listing and grab attributes
 for listing in listings:
-
-	# make / model description
-	name_container = listing.findAll("span", {"class":"srp-list-item-basic-info-model"})
-	name = name_container[0].text
-
-	# loc and distance  
-	loc_container = listing.findAll("div", {"class": "srp-list-item-dealership-location"})
-	loc = loc_container[0].text
-
-	# price
-	price_container = listing.findAll("span", {"class": "srp-list-item-price"})
-	price = price_container[0].text
+       
+    # make / model description
+    name_container = listing.findAll("span", {"class":"srp-list-item-basic-info-model"})
+    name = name_container[0].text   
+    
+    # loc and distance  
+    loc_container = listing.findAll("div", {"class": "srp-list-item-dealership-location"})
+    loc = loc_container[0].text
+    
+    # price
+    price_container = listing.findAll("span", {"class": "srp-list-item-price"})
+    price = price_container[0].text
 
 	# mileage
-	mile_container = listing.findAll("span", {"class": "srp-list-item-basic-info-value"})
-	mileage = mile_container[0].text
+    mile_container = listing.findAll("span", {"class": "srp-list-item-basic-info-value"})
+    mileage = mile_container[0].text
 
 	# link to page
-	link = listing.a["href"]
-
-	f.write(name + ", " + loc.replace(",","") + ", " + price.replace(",","") + ", " + mileage.replace(",","") + ", " + "https://www.carfax.com" + link.replace("'","") + "\n")
-
-
+    link = listing.a["href"]
+    
+    price_num = price.split(' ')[1].replace(",","").replace("$","")
+    if int(price_num) < 20000:
+        f.write(name + ", " + loc.replace(",","") + ", " + price.replace(",","") + ", " + mileage.replace(",","") + ", " + "https://www.carfax.com" + link.replace("'","") + "\n")
+    
 f.close()
